@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
@@ -17,7 +18,7 @@ import com.zank.store.constant.CtNetWork;
 
 public class DeviceTool {
     /**
-     * 获取序列号
+     * 获取序列号（IMEI）
      */
     public static String getDeviceId(Context context) {
         String deviceId = "";
@@ -36,10 +37,20 @@ public class DeviceTool {
     /**
      * 获取手机型号
      */
+    public static String getmType(Context context){
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String type = Build.MODEL;
+        return type;
+    }
 
     /**
      * 获取手机Android版本
      */
+    public static String getSdkVersion(Context context){
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String version = Build.VERSION.SDK+","+Build.VERSION.RELEASE;
+        return version;
+    }
 
     /**
      * 获取当前手机号码
