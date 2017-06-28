@@ -17,8 +17,10 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         List<String> list = new ArrayList<String>();
         list.add("1456154211-3-2");
-//        list.add("1-1456154211-3-1");
-//        list.add("1-1456154211-3-2");
+        list.add("1-1456154211-3-1");
+        list.add("1-1456154211-3-2");
+        list.add("1-1456153211-3-1");
+        list.add("1-1456156211-3-2");
         list.add("8746142316");
         list.add("4653131535");
         list.add("4153213221");
@@ -32,10 +34,10 @@ public class ExampleUnitTest {
         list.add("-");
         list.add("456415311efewf");
         list.add("fsdfsd-fwefwegs");
-        List<String> barCode = new ArrayList<>(); // 所有条码号
 
-        List<String> rBarCode = new ArrayList<>();
-        List<String> crBarCode = new ArrayList<>();
+        List<String> barCode = new ArrayList<>(); // 所有条码号
+        List<String> rBarCode = new ArrayList<>(); // 所有返单条码号
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).split("-").length == 3) { // 条码号
                 barCode.add(list.get(i));
@@ -66,6 +68,34 @@ public class ExampleUnitTest {
                 if (count > cbarCode.size()) {
                     for (String s : cbarCode) {
                         System.out.println("缺件：" + s + " 数量：" + (count - cbarCode.size()));
+                    }
+                }
+            }
+            System.out.println("---------------------------------------");
+        }
+
+        for (int j = 0; j < rBarCode.size(); j++) { // 返单条码号查重
+            List<String> crBarCode = new ArrayList<>(); // 某一返单条码号集合
+            String str = rBarCode.get(j).split("-")[0]+"-"+rBarCode.get(j).split("-")[1];
+            for (String code : rBarCode) { // 根据单号遍历出所有的条码号
+                if (code.contains(str)) {
+                    crBarCode.add(code);
+                }
+            }
+            rBarCode.removeAll(crBarCode); // 删除队列中的数据
+            int count = 1;
+            if (count == crBarCode.size()) { // 1-1单
+                System.out.println("就一个啊：" + crBarCode.get(0));
+            } else {
+                for (String s : crBarCode) {
+                    int sp = Integer.parseInt(s.split("-")[2]);
+                    if (sp > count) {
+                        count = sp;
+                    }
+                }
+                if (count > crBarCode.size()) {
+                    for (String s : crBarCode) {
+                        System.out.println("缺件：" + s + " 数量：" + (count - crBarCode.size()));
                     }
                 }
             }
