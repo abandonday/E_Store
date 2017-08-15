@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.zank.store.utils.ActivityCollector;
 import com.zank.store.utils.LogUtils;
-import com.zank.store.utils.RxUtils;
 
 import butterknife.ButterKnife;
 
@@ -45,6 +44,5 @@ public class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxUtils.unsubscribe();
     }
 }

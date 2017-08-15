@@ -1,6 +1,8 @@
 package com.zank.store.utils;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -37,8 +39,7 @@ public class DeviceTool {
     /**
      * 获取手机型号
      */
-    public static String getmType(Context context){
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    public static String getmType(Context context) {
         String type = Build.MODEL;
         return type;
     }
@@ -46,9 +47,8 @@ public class DeviceTool {
     /**
      * 获取手机Android版本
      */
-    public static String getSdkVersion(Context context){
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String version = Build.VERSION.SDK+","+Build.VERSION.RELEASE;
+    public static String getSdkVersion(Context context) {
+        String version = Build.VERSION.SDK + "," + Build.VERSION.RELEASE;
         return version;
     }
 
@@ -64,6 +64,18 @@ public class DeviceTool {
             number = "";
         }
         return number;
+    }
+
+    public static String getAPKVersion(Context context) {
+        String version = "";
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            version = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 
     /**

@@ -2,27 +2,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zank.store">
 
-    <!--wifi权限-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--READ_EXTERNAL_STORAGE/ACCESS_WIFI_STATE权限属于Dangerous Permissions,自行做好android6.0以上的运行时权限获取-->
+
     <!--网络权限-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--在SDCard中创建与删除文件权限-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 外部存储读权限，调试工具加载本地补丁需要 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+        阿里云热更新
+        value中的值分别改为通过平台HotFix服务申请得到的App Secret和RSA密钥，出于安全考虑，建议使用setSecretMetaData这个方法进行设置
+         -->
+        <meta-data
+            android:name="com.taobao.android.hotfix.IDSECRET"
+            android:value="24585529-1" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="00ef9a7a2e7716f9176518f1b848a716" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCnlZ5eSnGWqytBiUrf2+N/aistHg3V4KjFzfIHSd1PQc2/WdqyOPGG6qa4yIIAQpfZ72QKloZqcFhyk9Ep/blEAZBsm31MjZEFxnMykBFRBvFy48ceGiYgU3SWW33nEtLtiKkw3YxNyLiLdOx6tTPyADkq52drfFYy3dWUbUY6vBb79v7M4WNd656MHXfOmnEMgYcV1x/1AgXqt0L/TAvde3SMAkXmgdaTU7o3PjAUw3z65tZRwdZ5JDZzf3GsyE8iBeoDhn1S0Do6cMg0wcclgyGC8QgyuBNtYCc6G6RTvKCxRovN2XVx3O2zYy60LfLvzOE0rFCsVN7Dm82RR3OVAgMBAAECggEASbVT/5LsnOFSWDPjm8xiJlNzBBgY674xXTb0weHqFgcSUJxbxVGoYbfpdpKyIx0nHvLc5I9KNZyOOm7ra3WuO8wYUrydAsOtSoX7evzEsQfFwMuQc5v6svMh71P0b2LnJRSbneOD515mVOgrbtkuLL2OZ2F6Klt4qkzJuMvLPN9uCJ6mM93P608f7nCqC9GmSGql2Ze07h7HVH2tBfUwXC+Hx3DCeBdQmkiizmLbeMHcL8y7RI4peXnVUOhFbF0hdGxQV/s5qhL4fN3ypjTLJl5nRCwahibA5XQsPuQKadhpkO1SmKdgrXokdleGZHwhqIwYDjBpFPmC+4x9CtjhwQKBgQD65lwneIRJ9txmNjiLPc+/YBLbnGWHb1c6FfaFZpAxBSC2+PkB5KVDktuWQgB57GWQ3Y8FHTV4fNvINIyW7B6E3ArDwjnfYDSnkZyTE2ex3TVDvm/g3bj3jnYmDem0qwg7Un5Y/iPpDYAPEwVZt6d+YAK1rDWDR7faXpotT3RPcQKBgQCq/bMUVrMEhZex7Dh93cSFTXdqWLh0Pnps4UZ6TFzXV7YnojfdsolubH9y6VWaapK4r82kqeH0bU+bxetrA0jxRktAOJTwh/c7BX3FdPtl0Ma+DDwIu+1K9Plsy1ENmTVkNnHXlYdfSSuSHFtWtrbo5iuXW2EKgEFUCBQRJI/cZQKBgQDWNmujv3+i7sOJ+O0Z5PJEgLBZFBSTJ3qfuzS4/LJLSAeAcN2YwjBfmzkj9sIVVsH4h1GemiuW7XNwYX1PNdVwtbXzIRbsImWSU/4MjFrSPv1FE4jNwkA0DEvPfb11ZTkn/Oym6oSaa85UEHdW/Dhi63Ikzhz6MvdD19Vmrhmt4QKBgQCjeBOCODjA8+7IPGrtedxtDFhDpToCd9CW0u+L8AE6JjKQxXbfTdYxaSyW8RfTnltSkU/qQjcwdGiNJbQhBGzxrSA372AEbBghpuhMo7/L4MJ/4jZqqy76YCUsq1t7wqLWgW5oih13LP6oms9/oQJQueumsceeQGs0KNz2XpviOQKBgQD1cItu5BWxW3ifKMx3jdlULuGjyIo2It1+WpvpF5wJXUsHE7majXUXiColx82N80Z9ZMNDRzOc0T5xvdoHJYmKz7YgtBK6NGpZ+zh7iIZx8WQl7lGMf7Rmua+2z+tIwnMQc63hsZF8h/9UgzyhQhWA32XOx1M20D5Jy9WsslUbDA==" />
     </application>
 
 </manifest>

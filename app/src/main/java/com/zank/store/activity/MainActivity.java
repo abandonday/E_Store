@@ -1,7 +1,10 @@
-package com.zank.store;
+package com.zank.store.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.zank.store.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
