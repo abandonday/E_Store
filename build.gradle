@@ -1,10 +1,14 @@
 
 buildscript {
+    // kotlin插件版本
+    ext.kotlin_version = '1.1.4'
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
+        // kotlin配置
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
